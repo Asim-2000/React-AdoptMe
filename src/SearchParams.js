@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import {ANIMALS} from '@frontendmasters/pet'
+import { ANIMALS } from '@frontendmasters/pet'
+import useDropdown from './useDropdown'
 const SearchParams = () => {
   //hooks never go inside of statements i.e if and for
 
     const [location, setLocation] = useState("Seattle,WA");
-    const [animal, setAnimal] = useState('Dog');
-    const [breed, setBreed] = useState("");
     const [breeds, setBreeds] = useState([]);
+    const [animal, AnimalDropdown] = useDropdown("Animal", "dog", ANIMALS);
+    const [breed, BreedDropdown] = useDropdown("Breed", "", breeds);
 
   return (
     <div className="search-params">
@@ -22,36 +23,10 @@ const SearchParams = () => {
           />
               </label>
               
-              <label htmlFor="animal"
-                  Animal
-              >
-                  <select id="animal"
-                      value={animal}
-                   onChange={e => setAnimal(e.target.value)}
-                  onBlur={e=>setAnimal(e.target.value)}
-                  >
-                      <option>All</option>
-                      {ANIMALS.map(animal => <option key={animal} value={animal}>{animal}</option>)}
+              <AnimalDropdown />
+              <BreedDropdown/>
 
-                  </select>
-
-              </label>
-
-              <label htmlFor="breed"
-                  Breed
-              >
-                  <select id="breed"
-                      value={breed}
-                   onChange={e => setBreed(e.target.value)}
-                      onBlur={e => setBreed(e.target.value)}
-                      disabled={!breeds.length}
-                  >
-                      <option>All</option>
-                      {breeds.map(breedString => <option key={breedString} value={breedString}>{breedString}</option>)}
-
-                  </select>
-
-              </label>
+              
 
         <button>Submit</button>
       </form>
